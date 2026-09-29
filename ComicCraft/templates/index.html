@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Create a Comic · ComicCraft{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">CREATE • IMAGINE • PUBLISH</p>
+    <h1>Turn one idea into a <span>5-panel comic.</span></h1>
+    <p class="lead">Describe your story, choose the character, world, mood and art style. ComicCraft builds the outline, narration, illustrations and PDF.</p>
+  </div>
+</section>
+{% if demo_mode %}<div class="notice">Demo mode is ON. No AI provider calls are made.</div>{% endif %}
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+<form id="comic-form" class="card form-card" action="/generate" method="post">
+  <label>Story Prompt
+    <textarea name="story_prompt" maxlength="2000" required placeholder="A brave fox exploring an enchanted forest...">{{ form_data.story_prompt if form_data else '' }}</textarea>
+  </label>
+  <div class="grid two">
+    <label>Main Character Name
+      <input name="character_name" maxlength="80" required value="{{ form_data.character_name if form_data else '' }}" placeholder="Kavi">
+    </label>
+    <label>Setting
+      <select name="setting">
+        {% for value in ['Enchanted forest','School','Space station','Future city','Village'] %}<option {% if form_data and form_data.setting == value %}selected{% endif %}>{{ value }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Story Tone
+      <select name="tone">
+        {% for value in ['light-hearted','dramatic','poetic','funny','mysterious'] %}<option {% if form_data and form_data.tone == value %}selected{% endif %}>{{ value }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Art Style
+      <select name="art_style">
+        {% for value in ['comic book','anime','pixel art','realistic','watercolor'] %}<option {% if form_data and form_data.art_style == value %}selected{% endif %}>{{ value }}</option>{% endfor %}
+      </select>
+    </label>
+  </div>
+  <button id="submit-btn" class="primary" type="submit"><span>Generate My Comic</span><span class="spinner"></span></button>
+</form>
+<section class="steps">
+  <div><b>01</b><span>Outline</span></div><div><b>02</b><span>Story</span></div><div><b>03</b><span>Artwork</span></div><div><b>04</b><span>PDF</span></div>
+</section>
+{% endblock %}

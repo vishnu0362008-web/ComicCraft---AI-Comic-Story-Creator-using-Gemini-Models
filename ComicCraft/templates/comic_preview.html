@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Your Comic · ComicCraft{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><p class="eyebrow">YOUR GENERATED COMIC</p><h1>Five panels, one story.</h1></div>
+  <a class="secondary" href="/">Create another</a>
+</div>
+{% if demo_mode %}<div class="notice">Demo output — switch DEMO_MODE=false for real AI generation.</div>{% endif %}
+<section class="comic-grid">
+{% for panel in layout %}
+  <article class="panel card">
+    <div class="panel-number">PANEL {{ panel.panel_number }}</div>
+    <h2>{{ panel.title }}</h2>
+    <img src="{{ panel.image_path }}" alt="Comic illustration for {{ panel.title }}" loading="lazy">
+    <p class="scene">{{ panel.scene_description }}</p>
+    <p><strong>Caption:</strong> {{ panel.caption }}</p>
+    <p><strong>Narration:</strong> {{ panel.narration }}</p>
+    {% if panel.dialogue %}<blockquote>{{ panel.dialogue }}</blockquote>{% endif %}
+  </article>
+{% endfor %}
+</section>
+<div class="export-bar card">
+  <div><h2>Ready to save?</h2><p>Your images and story are assembled into a multi-page PDF.</p></div>
+  <a class="primary button" href="/download?pdf_path={{ pdf_path|urlencode }}">Download Your Comic as PDF</a>
+</div>
+{% endblock %}

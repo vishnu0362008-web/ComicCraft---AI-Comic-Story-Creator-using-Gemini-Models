@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{const form=document.getElementById('comic-form');if(!form)return;form.addEventListener('submit',()=>{const button=document.getElementById('submit-btn');button.classList.add('loading');button.querySelector('span').textContent='Generating your comic…';});});
